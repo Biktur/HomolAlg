@@ -403,8 +403,8 @@ $\tilde{\Hom}(X, Y) = \{X \xrightarrow{f} Z \xleftarrow{u} Y| u \in M\}$.
 \end{equation*}
 \begin{cd}
     & T \\
-    Z \ar[ur, "g"] & & Z' \ar[ul, "v"] \\
-    X & & Y
+    Z \ar[ur, "g"] & & Z' \ar[ul, "v", swap] \\
+    X \uar["f"] \ar[urr, "u", near start, swap] & & Y \uar["f'"] \ar[ull, "u'", near start]
 \end{cd}
 где $vu' \in M$.
 
@@ -414,8 +414,8 @@ $\Hom(X, Y)$ --- фактор класс
 
 \begin{cd}
 & & S \\
-Z & & T \\
-X & & Y & & W
+& Z \ar[ur] & & T \ar[ul] \\
+X \ar[ur] & & Y \ar[ul] \ar[ur] & & W \ar[ul]
 \end{cd}
 (замкнули по 3).
 \end{document}
