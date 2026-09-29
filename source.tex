@@ -1,0 +1,421 @@
+\documentclass{article}
+\usepackage[T2A]{fontenc}
+\usepackage[english, russian]{babel}
+\usepackage{mathtools, amssymb, amsfonts, amsthm}
+\usepackage{tikz-cd}
+\usetikzlibrary{babel}
+\usepackage{enumitem}
+
+\newtheorem*{theorem}{Теорема}
+\newtheorem*{corollary}{Следствие}
+\newtheorem*{lemma}{Лемма}
+\newtheorem*{statement}{Утверждение}
+\newtheorem*{proposition}{Предложение}
+\theoremstyle{definition}
+\newtheorem*{definition}{Определение}
+\theoremstyle{remark}
+\newtheorem*{properties}{Свойства}
+\newtheorem*{reminder}{Напоминание}
+\newtheorem*{remark}{Замечание}
+\newtheorem*{example}{Пример}
+\newtheorem{problem}{Задача}
+
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\Ob}{Ob}
+\DeclareMathOperator{\Arr}{Arr}
+\newcommand{\Cat}{\mathcal{C}}
+\newcommand{\A}{\mathcal{A}}
+
+\newenvironment{enum}[2][\parindent]{\begin{enumerate}[nosep, wide, labelindent = #1, label=#2]}{\end{enumerate}}
+\newenvironment{cd}{\begin{equation*}\begin{tikzcd}}{\end{tikzcd}\end{equation*}}
+\renewcommand{\thesection}{Глава \arabic{section}}
+\renewcommand{\thesubsection}{Глава \arabic{section}.\arabic{subsection}}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Триангулированные категории}
+
+\setcounter{subsection}{-1}
+\subsection{Абелевы категории}
+
+\begin{definition}
+    Аддитивной категорией называется категория $\Cat$ со структурой абелевой группы на каждом $\Hom(X, Y)$ такой, что:
+    \begin{enum}{\arabic*)}
+        \item $f \circ (g + h) = f \circ g + f \circ h$.
+        \item Существует $0$ --- инициальный и терминальный объект.
+        \item Существует копроизведение = произведение двух объектов.
+    \end{enum}
+\end{definition}
+
+\begin{definition}
+    $\mathcal{C}$ --- адитивная категория, $f \in \Hom(X, Y)$, $g \in \Hom(K, X)$ называется ядром, если $f \circ g = 0$ и для любого $\tilde g$: $f \circ \tilde{g} = 0$ существует единственный $h$, что диаграмма коммутирует.
+\end{definition}
+
+\begin{cd}
+    K \rar["g"] & X \rar["f"] & Y \\
+    \tilde{K} \ar[u, "h"] \ar[ur, "\tilde{g}"] 
+\end{cd}
+
+\begin{definition}
+    Аддитивная категория предабелева, если любой морфизм имеет ядро и коядро.
+\end{definition}
+
+$\Cat$ --- предабелева, $f \in \Hom(X, Y)$.
+\begin{cd}
+\ker \rar & X \dar \rar["f"] \ar[dr, "\tilde{f}"] & Y \dar \rar & \coker \\
+& \coker(\ker) \rar["\tilde{\tilde{f}}"] & \ker(\coker)
+\end{cd}
+
+\begin{definition}
+    Если в предабелевой категории $\Cat$ $\tilde{\tilde{f}}$ --- изоморфизм, $\Cat$ абелева.
+\end{definition}
+
+\begin{theorem}[Фрейда--Митчелла]
+    Любая абелева категория вкладывается как полная подкатегория в $A-mod$ для некоторого $A$ аддитивным точным функтором.
+\end{theorem}
+
+$\A$ --- абелева катугория, $C(\A)$ --- категория комплексов, она тоже абелева.
+
+\begin{theorem}[О длинной гомомлогической последовательности]
+    Если
+    \begin{cd}
+        0 \rar & A \rar & B \rar & C \rar & 0
+    \end{cd}
+    --- коротка точная последовательность комплексов, существует длинная последовательность
+    \begin{cd}
+        \ldots \rar & H^n(A) \rar & H^n(B) \rar & H^n(C) \rar["\delta_n"] & H^{n + 1}(A) \rar & \ldots
+    \end{cd}
+    $H^n$ --- набор функторов. 
+\end{theorem}
+
+В новой категории
+
+\begin{enum}{\arabic*)}
+    \item Для короткой точной последовательности
+    \begin{cd}
+        0 \rar & A \rar & B \rar & C \rar & 0
+    \end{cd}
+    возникает $h: C \rightarrow A[1]$ и последовательность
+    \begin{cd}
+        0 \rar & A \rar["f"] & B \rar["g"] & C \rar["h"] & A[1] \rar["{-f[1]}"] & \ldots
+    \end{cd}
+    \item Любой $s \in \Hom_{\Cat(A)}(X, Y)$ в новой категории $s = f$, где $f$ --- моно(В частности возникает длинная последовательность). Итого, любой $f$ включается в "выделенный треугольник".
+\end{enum}
+
+\subsection{Категории с надстройкой}
+
+\begin{definition}
+    $\Cat$ --- аддитивная категория, $S$ --- аддитивный эндофунктор.
+    \begin{cd}
+        X \rar["f"] & Y \rar["g"] & Z \rar["h"] & S(X)
+    \end{cd}
+    --- $S$ последовательность. Они образвуют аддитивную категорию
+    \begin{cd}
+        X \dar["f"] \rar & Y \dar["g"] \rar & Z \dar["h"] \rar & S(X) \dar["S(f)"] \\
+        X' \rar & Y' \rar & Z' \rar & S(X')
+    \end{cd}
+\end{definition}
+
+Пусть задан класс $\Delta$ $S$-последовательностей.
+
+$(\Cat, S, \Delta)$ называется категорией с надстройкой, если выполнены аксиомы:
+\begin{enum}{Tr \arabic*}
+    \setcounter{enumi}{-1}
+    \item $\Delta$ замкнут относительно изоморфизмов.
+    \item $\Delta$ содержит все $S$-последовательности вида $0 \rightarrow A \xrightarrow{id} A \rightarrow 0$.
+    \item $Y \xrightarrow{g} Z \xrightarrow{h} S(X) \xrightarrow{-Sf} S(Y) \in \Delta$.
+    \item Если есть две последовательности и коммутативный квадрат
+    \begin{cd}
+        X \dar["u"] \rar["f"] & Y \dar["v"] \\
+        X' \rar["f'"] & Y'
+    \end{cd}
+    то он достраивается до морфизма $S$-последовательностей.
+    \item Любой квадрат 
+    \begin{cd}
+        A \dar[equal] \rar & B \dar \\
+        A \rar & C
+    \end{cd}
+    достраивается до диаграммы
+    \begin{cd}
+    A \dar[equal] \rar & B \dar \rar & D \dar \rar & S(A) \dar[equal]\\
+    A \rar & C \dar \rar & E \dar \rar & S(A) \dar["S(f)"]\\
+    & K \dar \rar[equal] & K \dar \rar & S(B) \\
+    & S(B) \rar & S(D)
+    \end{cd}
+\end{enum}
+
+\begin{lemma}
+    Если
+    \begin{cd}
+        X \rar["u"] & Y \rar["v"] & Z \rar["w"] & SX \in \Delta,
+    \end{cd}
+    то $vu = 0$.
+\end{lemma}
+
+\begin{proof}
+    \begin{cd}
+    X \rar["id"] \dar["id"] & X \dar["u"] \rar & 0 \dar[dashed] \rar & SX \dar[dashed] \\
+    X \rar["u"] & Y \rar["v"] & Z \rar["w"] & SX
+    \end{cd}
+\end{proof}
+
+\begin{lemma}
+    \begin{cd}
+        X \rar["u"] & Y \rar["v"] & Z \rar["w"] & SX
+    \end{cd}
+    $\in \Delta$, тогда для любого $T$.
+    \begin{cd}
+    \Hom(Z, T) \rar & \Hom(Y, T) \rar & \Hom(X, T)
+    \end{cd}
+    точна
+\end{lemma}
+\begin{proof}
+    \begin{cd}
+        X \rar["u"] \dar & Y \rar["v"] \dar["f"] & Z \rar["w"] \dar[dashed] & SX \dar[dashed]\\
+        0 \rar & T \rar["id"] & T \rar & 0
+    \end{cd}
+\end{proof}
+
+\begin{lemma}
+    \begin{cd}
+        X \rar \dar["f"] & Y \rar \dar["g"] & Z \rar \dar["h"] & SX \dar["Sf"] \in \Delta \\
+        X' \rar & Y' \rar & Z' \rar & SX' \in \Delta
+    \end{cd}
+    Если $f, g$ --- изоморфизмы, то и $h$ --- изоморфизм.
+\end{lemma}
+\begin{proof}
+    Сдвинем треугольники применим лемму выше
+    \begin{cd}
+        \Hom(SY, T) \rar & \Hom(SX, T) \rar & \Hom(Z, T) \rar & \Hom(Y, T) \rar & \Hom(X, T) \\
+        \Hom(SY', T) \uar \rar & \Hom(SX', T) \rar \uar & \Hom(Z', T) \uar["h^*"] \rar & \Hom(Y', T) \uar \rar & \Hom(X', T) \uar
+    \end{cd}
+    Т. е. для любого $T$ по 5-лемме $h^*$ --- изоморфизм, так что по лемме Йонеды $h$ --- изоморфизм.
+\end{proof}
+
+\begin{definition}
+    $f \in \Hom(X, Y)$, $(Z = C(f), g, h)$ --- конус морфизма, если
+    \begin{cd}
+        X \rar["f"] & Y \rar["g"] & Z \rar["h"] & SX \in \Delta
+    \end{cd}
+    Из Tr 4 конус существует.
+\end{definition}
+
+\begin{corollary}
+    $C(f)$ единственный с точностью до изоморфизма.
+\end{corollary}
+
+\begin{definition}
+    \begin{cd}
+        X \rar & Y \rar & Z \rar & SX
+    \end{cd}
+    --- предтреугольник, если последовательность
+    \begin{cd}
+        \Hom(SY, T) \rar & \Hom(SX, T) \rar & \Hom(Z, T) \rar & \Hom(Y, T) \rar & \Hom(X ,T)
+    \end{cd}
+    точна.
+\end{definition}
+
+\begin{lemma}
+    Сумма $S$-последовательностей лежит в $\Delta$ тогда и только тогда, когда оба слагаемых лежат в $\Delta$.
+\end{lemma}
+\begin{proof}
+    Пусть каждое из слагаемых лежит.
+    \begin{cd}
+    X \oplus X' \rar & Y \oplus Y' \rar & \tilde{Z} \rar & S(X \oplus X') \in \Delta
+    \end{cd}
+    Далее 5-лемма или диаграмма прямой суммы.
+    
+    В обратную сторону
+    \begin{cd}
+    X \dar \rar & Y \dar \rar & Z \dar[dashed] \rar & SX \dar[dashed] \\
+    X \oplus X \dar' \rar & Y \oplus Y' \dar \rar & Z \oplus Z' \dar[dashed] \rar & S(X \oplus X') \dar[dashed] \in \Delta \\
+    X \rar & Y \rar & \tilde{Z} \rar & SX \in \Delta
+    \end{cd}
+    Далее опять 5-лемма.
+\end{proof}
+
+\begin{lemma}
+    \begin{cd}
+        X \rar["0"] & Y \rar & Z \rar & SX \in Delta
+    \end{cd}
+    Тогда он изоморфен
+    \begin{cd}
+        X \rar["0"] & Y \rar & Y \oplus SX \rar & SX
+    \end{cd}
+\end{lemma}
+\begin{proof}
+    Вторая принадлежит $\Delta$ как сумма, так что она изоморфна.
+\end{proof}
+
+\begin{definition}
+    Триангулированная категория --- категория с надстройкой, в которой $S$ эквивалентность.
+
+    Предтриангулированная --- триангулированная категория без октаэдра, но $\Hom$-ы достраиваются.
+\end{definition}
+
+\begin{properties} \leavevmode
+    \begin{enum}{\arabic*)}
+        \item Если
+        \begin{cd}
+            B \rar & C \rar & S(A) \rar["-Sf"] & S(B) \in \Delta,
+        \end{cd}
+        то и
+        \begin{cd}
+            A \rar["f"] & B \rar & C \rar & S(A) \in \Delta
+        \end{cd}
+        \item Можно достроить любой квадрат(необязательно левый)
+        \item 
+        \begin{cd}
+        \Hom(T, X) \rar & \Hom(T, Y) \rar & \Hom(T, Z)
+        \end{cd}
+        точна
+    \end{enum}
+\end{properties}
+
+\begin{lemma}
+    $f \in \Hom(X, Y)$, если $f$ --- мономорфизм, $Y = X \oplus Z$. Аналогично с эпи.
+\end{lemma}
+\begin{proof}
+    Докажем для эпи. $f$ --- эпи.
+    \begin{cd}
+        X \rar["f"] & Y \rar & Z \rar & SX
+    \end{cd}
+    $gf = 0$, значит $g = 0$. Тогда 
+    \begin{cd}
+        Y \rar["0"] \dar & Z \rar \dar & SX \rar \dar & SY \dar \in \Delta \\
+        Y \rar & Z \rar & Z \oplus SY \rar & SY
+    \end{cd}
+\end{proof}
+
+Есть отображение $\Ob(\Arr \Cat) \rightarrow \Ob \Cat$. Любая пара морфизмов достраивается, но это не функториально.
+
+Факт. Если $\Cat$ триангулированная категория и $C(f)$ продолжается до функтора, то $\Cat$ --- полная триангулированная подкатегория в абелевой полупростой категория(с тривиальной структурой)
+
+\begin{definition}
+    Пусть $\Cat_1, \Cat_2$ триангулировнные. Триангулированным функтором из $\Cat_1$ в $\Cat_2$ называется $(F, R)$, $F: \Cat_1 \rightarrow \Cat_2$ --- аддитивный функтор. $R: S_{\Cat_2}F \leftarrow FS_{\Cat_1}$ --- изоморфизм, т. ч., если
+    \begin{cd}
+        X \rar & Y \rar & Z \rar & SX \in \Delta_{C_1},
+    \end{cd}
+    \begin{cd}
+        FX \rar & FY \rar & FZ \rar & SFX \in \Delta_{C_2}
+    \end{cd}
+\end{definition}
+
+\begin{definition}
+    $\Cat_1$ триангулированная подкатегории, если $\Cat_1$ полная подкатегория, и $i: \Cat_1 \rightarrow \Cat_2$ --- триангулированный функтор.
+\end{definition}
+
+\begin{definition}
+    Аддитивная категория $\Cat$ называется Карубиевой(идемпотентно полной), если все идемпотенты расщипляются, т. е. если $e \in \Hom(A, A)$, $e^2 = e$, то $A \cong A_1 \oplus A_2$ и диаграмма
+    \begin{cd}
+    A \rar \dar[equal] & A_1 \rar & A \dar[equal] \\
+    A \ar[rr, "e"] & & A
+    \end{cd}
+    коммутирует.
+\end{definition}
+
+Факт. Любая триангулированная вкладывается в карубиеву.
+
+Факт 2. $\Cat$ --- карубиева, конус функториален, тогда $\Cat$ полупростая абелева с тривиальной структурой.
+
+\begin{proposition}
+    Если в триангулированной категории идемпотенты расщепляются, и конус функториален, тогда любой треугольник сумма тривиальных.
+\end{proposition}
+\begin{proof}
+    \begin{cd}
+        X \rar["f"] & Y \rar["g"] \dar["g"] & Z \dar["c(g)"] \rar & SX \\
+        0 \rar & Z \rar  \dar["c(g)"]& Z \rar \dar["c(g)"]& 0 \\
+        0 \rar & Z \rar & Z \rar & 0
+    \end{cd}
+    т. е. $c(g)^2 = c(gc(g)) = c(g)$. Значит $C \simeq C_1 \oplus C_2$.
+    \begin{cd}
+        C \rar["p"] & C_1 \rar["i"] & C
+    \end{cd}
+    \begin{proposition}
+        $pg$ --- эпи
+    \end{proposition}
+    \begin{proof}
+    $upg = vpg$, тогда $c(upg) = c(vpg)$, значит $upc(g) = vpc(g)$, значит $up = vp$, значит $u = v$. 
+    \end{proof}
+    Но эпи расщипляется и любой $g \in \Hom(B, C)$ изоморфен $\begin{tikzcd} B \rar & C_1 \oplus C_2 \end{tikzcd}$. 
+\end{proof}
+
+Более общая теорема:
+
+\begin{theorem}
+    Копредел диаграммы --- коконус с универсальным свойством. Слабый копредел --- коконус для которого есть стрелка
+\end{theorem}
+
+\begin{statement}
+Слабый копредел функториален, идемпотенты рсащепляются, тогда это предел.
+\end{statement}
+
+\section{Локализация категорий}
+
+$\Cat$ --- категория, $M$ --- класс морфизмов. Локализация $C \xrightarrow{i} C(M^{-1})$ такой, что для любого $F: C \rightarrow D$, т. ч. $F(s)$  --- изоморфизмы, существуе $G$, т. ч. $F = G \circ I$.
+
+\begin{definition}
+    $M$ --- правый локализующий класс($\Cat$ --- аддитивная), если
+    \begin{enum}{\arabic*)}
+        \item $id_X \in M$
+        \item $f, g \in M$, тогда $f \circ g \in M$.
+        \item Если 
+        \begin{cd}
+        X \dar["u"] \rar["f"] & Z \\
+        Y
+        \end{cd}
+        и $u \in M$, тогда есть 
+        \begin{cd}
+        X \dar["u"] \rar["f"] & Z \dar["v"] \\
+        Y \rar["g"] & T
+        \end{cd}
+        где $v \in M$.
+        \item 
+        \begin{cd}
+            Z \rar["u"] & X \rar["f"] & Y
+        \end{cd}
+        $u \in M$, $fu = 0$, тогда найдётся $v \in M$(в какой-то объект), т. ч. $vf = 0$.
+    \end{enum}
+\end{definition}
+
+Построим $C[M^{-1}]$. Объекты те же. Определим $\Hom(X, Y)$.
+
+$\tilde{\Hom}(X, Y) = \{X \xrightarrow{f} Z \xleftarrow{u} Y| u \in M\}$.
+
+Зададим отношение эквивалентности
+\begin{equation*}
+    \begin{tikzcd}
+        & Z \\
+        X \ar[ur, "f"] & & Y \ar[ul, "u"]
+    \end{tikzcd}
+    \sim
+    \begin{tikzcd}
+        & Z' \\ 
+        X \ar[ur, "f'"] & & Y \ar[ul, "u'"]
+    \end{tikzcd}
+    ,\text{ если }
+\end{equation*}
+\begin{cd}
+    & T \\
+    Z \ar[ur, "g"] & & Z' \ar[ul, "v"] \\
+    X & & Y
+\end{cd}
+где $vu' \in M$.
+
+$\Hom(X, Y)$ --- фактор класс
+
+Композиция
+
+\begin{cd}
+& & S \\
+Z & & T \\
+X & & Y & & W
+\end{cd}
+(замкнули по 3).
+\end{document}
